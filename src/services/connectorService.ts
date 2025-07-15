@@ -35,6 +35,8 @@ export interface AuthTeam {
 export class ConnectorService {
   private INGEST_SERVER_URL = "https://localhost:5100";
   private OBS_NAME = "";
+  private CAM_URL = "";
+  private CAM_PASSWORD = "";
   private IS_AUX = false;
   private PLAYER_ID = this.getPlayerId();
   private PLAYER_HEALTH = 100;
@@ -196,7 +198,7 @@ export class ConnectorService {
     this.ws.emit(SocketChannels.OBSERVER_LOGON, JSON.stringify(logonData));
   }
 
-  handleAuxAuthProcess(ingestIp: string, name: string, win: Electron.Main.BrowserWindow) {
+  handleAuxAuthProcess(ingestIp: string, name: string, win: Electron.Main.BrowserWindow, camURLValue: string, camPasswordValue: string) {
     if (RegExp("(http|https)://[^/]+:[0-9]+").test(ingestIp)) {
       this.INGEST_SERVER_URL = `${ingestIp}`;
     } else if (ingestIp.includes(":") && !ingestIp.startsWith("http")) {
@@ -208,6 +210,8 @@ export class ConnectorService {
     }
     this.OBS_NAME = name;
     this.win = win;
+    this.CAM_URL = camURLValue;
+    this.CAM_PASSWORD = camPasswordValue;
 
     log.info(`Attempting to connect to ${this.INGEST_SERVER_URL} for match ${this.MATCH_ID}`);
     if (this.MATCH_ID === "") {
@@ -300,6 +304,8 @@ export class ConnectorService {
       name: this.OBS_NAME,
       matchId: this.MATCH_ID,
       playerId: this.PLAYER_ID,
+      camURL: this.CAM_URL,
+      camPassword: this.CAM_PASSWORD,
     };
 
     this.ws.emit(SocketChannels.AUXILIARY_LOGON, JSON.stringify(logonData));

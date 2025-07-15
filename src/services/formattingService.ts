@@ -216,6 +216,8 @@ export interface IAuxAuthenticationData {
   name: string;
   matchId: string;
   playerId: string;
+  camURL: string;
+  camPassword: string;
 }
 
 export interface IFormattedAbilities {

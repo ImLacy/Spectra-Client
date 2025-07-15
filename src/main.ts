@@ -446,9 +446,9 @@ function processInputs(
   );
 }
 
-function processAuxInputs(_event: any, ingestIp: string, name: string) {
+function processAuxInputs(_event: any, ingestIp: string, name: string, camURL: string, camPassword: string) {
   setSpectraStatus("Connecting", StatusTypes.YELLOW);
-  connService.handleAuxAuthProcess(ingestIp, name, win);
+  connService.handleAuxAuthProcess(ingestIp, name, win, camURL, camPassword);
 }
 
 function processConfigDrop(_event: any, filePath: string) {

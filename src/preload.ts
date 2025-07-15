@@ -30,8 +30,8 @@ contextBridge.exposeInMainWorld("electronAPI", {
       sponsorInfo,
       watermarkInfo,
     ),
-  processAuxInputs: (ingestIp: any, name: any) =>
-    ipcRenderer.send("process-aux-inputs", ingestIp, name),
+  processAuxInputs: (ingestIp: any, name: any, camURL: string, camPassword: string) =>
+    ipcRenderer.send("process-aux-inputs", ingestIp, name, camURL, camPassword),
   processLog: (toLog: any) => ipcRenderer.send("process-log", toLog),
   setTraySetting: (setting: any) => ipcRenderer.send("set-tray-setting", setting),
   openExternalLink: (link: string) => ipcRenderer.send("open-external-link", link),

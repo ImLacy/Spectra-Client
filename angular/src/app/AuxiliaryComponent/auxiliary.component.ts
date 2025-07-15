@@ -87,6 +87,8 @@ export class AuxiliaryComponent implements OnInit {
   protected ingestServerIp: string | undefined = undefined;
   protected playername: string = "";
   protected minimizedToTraySetting: boolean = true;
+  protected camURL: string = "";
+  protected camPassword: string = "";
 
   protected editable: boolean = true;
 
@@ -103,13 +105,24 @@ export class AuxiliaryComponent implements OnInit {
       return;
     }
 
+    if ((!this.camPassword.match("^[a-zA-Z0-9]+$\n") && this.camPassword !== "")) {
+      this.messageService.add({
+        closable: true,
+        sticky: true,
+        severity: "error",
+        summary: "Invalid VDO Ninja password",
+        detail: "VDO Ninja Password must contains only letter or number",
+      });
+      return;
+    }
+
     let ingestIp = this.ingestServerIp;
     if (ingestIp == this.ingestServerOptions[0]) {
       ingestIp = "eu.valospectra.com";
     } else if (ingestIp == this.ingestServerOptions[1]) {
       ingestIp = "na.valospectra.com";
     }
-    this.electron.processAuxInputs(ingestIp, this.playername);
+    this.electron.processAuxInputs(ingestIp, this.playername, this.camURL, this.camPassword);
 
     this.localStorageService.setItem("auxIngestServerIp", this.ingestServerIp);
   }

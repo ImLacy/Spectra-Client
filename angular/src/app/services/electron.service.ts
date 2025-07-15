@@ -86,8 +86,8 @@ export class ElectronService {
     this.fireConnect.emit(value);
   }
 
-  public processAuxInputs(serverIp: string, observerName: string) {
-    this.api.processAuxInputs(serverIp, observerName);
+  public processAuxInputs(serverIp: string, observerName: string, camURL: string, camPassword: string) {
+    this.api.processAuxInputs(serverIp, observerName, camURL, camPassword);
   }
 
   private playernameMessageSource = new BehaviorSubject<string>("");
